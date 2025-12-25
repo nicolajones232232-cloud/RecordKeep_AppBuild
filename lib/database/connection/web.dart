@@ -2,5 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:drift/web.dart';
 
 Future<QueryExecutor> connect() async {
-  return WebDatabase('recordkeep_db');
+  return WebDatabase.withStorage(
+    DriftWebStorage.indexedDb('recordkeep_db'),
+  );
 }
