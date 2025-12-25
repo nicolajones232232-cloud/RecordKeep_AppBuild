@@ -32,15 +32,27 @@
   <title>RecordKeep</title>
   <link rel="manifest" href="manifest.json">
   
-  <!-- SQL.js for Drift database -->
-  <script src="https://cdn.jsdelivr.net/npm/sql.js@1.8.0/dist/sql-wasm.js"></script>
+  <!-- SQL.js for Drift database - using different CDN -->
+  <script src="https://unpkg.com/sql.js@1.8.0/dist/sql-wasm.js"></script>
 </head>
 <body>
   <script>
-    // Configure SQL.js for Drift
+    // Configure SQL.js for Drift with better error handling
     window.sqlJsConfig = {
-      locateFile: file => `https://cdn.jsdelivr.net/npm/sql.js@1.8.0/dist/${file}`
+      locateFile: function(file) {
+        if (file.endsWith('.wasm')) {
+          return `https://unpkg.com/sql.js@1.8.0/dist/${file}`;
+        }
+        return file;
+      }
     };
+    
+    // Add error handling for SQL.js loading
+    window.addEventListener('error', function(e) {
+      if (e.message && e.message.includes('WebAssembly')) {
+        console.warn('WebAssembly loading failed, this may affect database functionality');
+      }
+    });
   </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>

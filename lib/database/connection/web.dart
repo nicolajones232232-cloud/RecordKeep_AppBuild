@@ -2,6 +2,14 @@ import 'package:drift/drift.dart';
 import 'package:drift/web.dart';
 
 Future<QueryExecutor> connect() async {
-  // Use the basic WebDatabase - this should work even if deprecated
-  return WebDatabase('recordkeep_db');
+  try {
+    // Try to use WebDatabase with IndexedDB storage
+    return WebDatabase.withStorage(
+      DriftWebStorage.indexedDb('recordkeep_db'),
+    );
+  } catch (e) {
+    // If that fails, fall back to basic WebDatabase
+    print('IndexedDB failed, using basic WebDatabase: $e');
+    return WebDatabase('recordkeep_db');
+  }
 }
