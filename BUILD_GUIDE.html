@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecordKeep - Build Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .logo {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        h1 {
+            color: #2563eb;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            padding-right: 100px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        
+        h2 {
+            color: #1e40af;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        
+        h3 {
+            color: #374151;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        
+        .step {
+            background: #f9fafb;
+            border-left: 4px solid #2563eb;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .step-number {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        code {
+            background: #1e293b;
+            color: #10b981;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Monaco', 'Courier New', monospace;
+            line-height: 1.5;
+        }
+        
+        pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+        
+        .command {
+            color: #10b981;
+        }
+        
+        .comment {
+            color: #64748b;
+        }
+        
+        .warning {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .warning strong {
+            color: #d97706;
+        }
+        
+        .success {
+            background: #d1fae5;
+            border-left: 4px solid #10b981;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .success strong {
+            color: #059669;
+        }
+        
+        .info {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .info strong {
+            color: #2563eb;
+        }
+        
+        ul {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+        
+        li {
+            margin: 8px 0;
+        }
+        
+        .output-location {
+            background: #f0fdf4;
+            border: 2px solid #10b981;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        
+        .file-path {
+            color: #059669;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        th {
+            background: #f9fafb;
+            font-weight: 600;
+            color: #374151;
+        }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 2px solid #e5e7eb;
+            text-align: center;
+            color: #6b7280;
+        }
+        
+        /* Cover Page */
+        .cover-page {
+            display: none;
+        }
+        
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            /* Cover Page for Print */
+            .cover-page {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+                page-break-after: always;
+                text-align: center;
+            }
+            
+            .cover-page .cover-logo {
+                width: 200px;
+                height: 200px;
+                margin-bottom: 40px;
+                border-radius: 40px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            }
+            
+            .cover-page h1 {
+                font-size: 3em;
+                color: #2563eb;
+                margin-bottom: 20px;
+                padding: 0;
+            }
+            
+            .cover-page .cover-subtitle {
+                font-size: 1.5em;
+                color: #666;
+                margin-bottom: 60px;
+            }
+            
+            .cover-page .cover-info {
+                font-size: 1.1em;
+                color: #999;
+                margin-top: 40px;
+            }
+            
+            .cover-page .cover-version {
+                font-size: 0.9em;
+                color: #bbb;
+                margin-top: 20px;
+            }
+            
+            .container {
+                max-width: 100%;
+                box-shadow: none;
+                padding: 20px;
+            }
+            
+            .logo {
+                width: 60px;
+                height: 60px;
+            }
+            
+            h1 {
+                font-size: 2em;
+                page-break-after: avoid;
+            }
+            
+            h2 {
+                page-break-before: always;
+                page-break-after: avoid;
+                margin-top: 20px;
+            }
+            
+            h2:first-of-type {
+                page-break-before: avoid;
+            }
+            
+            h3 {
+                page-break-after: avoid;
+            }
+            
+            .step, .warning, .success, .info, .output-location {
+                page-break-inside: avoid;
+            }
+            
+            pre {
+                page-break-inside: avoid;
+                background: #f5f5f5;
+                border: 1px solid #ddd;
+            }
+            
+            code {
+                background: #f5f5f5;
+                color: #333;
+            }
+            
+            .command {
+                color: #059669;
+                font-weight: 600;
+            }
+            
+            .comment {
+                color: #666;
+            }
+            
+            table {
+                page-break-inside: avoid;
+            }
+            
+            a {
+                color: #2563eb;
+                text-decoration: none;
+            }
+            
+            .footer {
+                page-break-before: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cover Page (only shows when printing) -->
+    <div class="cover-page">
+        <img src="assets/logo.png" alt="RecordKeep Logo" class="cover-logo">
+        <h1>RecordKeep</h1>
+        <p class="cover-subtitle">Build Guide</p>
+        <div class="cover-info">
+            <p>Complete guide to building macOS and Android releases</p>
+        </div>
+        <div class="cover-version">
+            <p>Version 1.0 • December 2025</p>
+            <p>Business Management System</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <img src="assets/logo.png" alt="RecordKeep Logo" class="logo">
+        <h1>🚀 RecordKeep Build Guide</h1>
+        <p class="subtitle">Complete guide to building macOS and Android releases</p>
+
+        <div class="info">
+            <strong>📋 Prerequisites:</strong> Make sure you have Flutter installed and configured on your Mac.
+        </div>
+
+        <!-- SECTION 1: NAVIGATE TO PROJECT -->
+        <h2>📁 Step 1: Navigate to Project Root</h2>
+        
+        <div class="step">
+            <span class="step-number">1</span>
+            <strong>Open Terminal</strong>
+            <p>Press <code>Cmd + Space</code>, type "Terminal", and press Enter</p>
+        </div>
+
+        <div class="step">
+            <span class="step-number">2</span>
+            <strong>Navigate to your project folder</strong>
+            <pre><code><span class="comment"># Replace with your actual project path</span>
+<span class="command">cd /Users/neiljones/RecordKeep_AppBuild</span></code></pre>
+        </div>
+
+        <div class="step">
+            <span class="step-number">3</span>
+            <strong>Verify you're in the right location</strong>
+            <pre><code><span class="command">ls</span>
+
+<span class="comment"># You should see: lib/ android/ ios/ macos/ pubspec.yaml</span></code></pre>
+        </div>
+
+        <!-- SECTION 2: CLEAN BUILD -->
+        <h2>🧹 Step 2: Clean Previous Builds</h2>
+        
+        <div class="warning">
+            <strong>⚠️ Important:</strong> Always clean before building a release to avoid stale artifacts.
+        </div>
+
+        <div class="step">
+            <span class="step-number">1</span>
+            <strong>Run Flutter clean</strong>
+            <pre><code><span class="command">flutter clean</span>
+
+<span class="comment"># This removes all build artifacts and caches</span></code></pre>
+        </div>
+
+        <!-- SECTION 3: GET DEPENDENCIES -->
+        <h2>📦 Step 3: Install Dependencies</h2>
+        
+        <div class="info">
+            <strong>💡 Note:</strong> This step is REQUIRED before building. It downloads all packages your app needs.
+        </div>
+
+        <div class="step">
+            <span class="step-number">1</span>
+            <strong>Get Flutter packages</strong>
+            <pre><code><span class="command">flutter pub get</span>
+
+<span class="comment"># Downloads all dependencies from pubspec.yaml</span>
+<span class="comment"># Takes 10-30 seconds</span></code></pre>
+        </div>
+
+        <div class="success">
+            <strong>✅ Success:</strong> You should see "Got dependencies!" message
+        </div>
+
+        <!-- SECTION 4: BUILD MACOS -->
+        <h2>🍎 Step 4: Build macOS Release</h2>
+
+        <div class="step">
+            <span class="step-number">1</span>
+            <strong>Build macOS app</strong>
+            <pre><code><span class="command">flutter build macos --release</span>
+
+<span class="comment"># Builds optimized macOS app</span>
+<span class="comment"># Takes 2-5 minutes</span></code></pre>
+        </div>
+
+        <div class="step">
+            <span class="step-number">2</span>
+            <strong>Wait for completion</strong>
+            <p>You'll see progress messages. Wait for "Built build/macos/Build/Products/Release/recordkeep.app"</p>
+        </div>
+
+        <div class="output-location">
+            <strong>📍 Your macOS app is located at:</strong><br>
+            <span class="file-path">build/macos/Build/Products/Release/recordkeep.app</span>
+        </div>
+
+        <h3>What you get:</h3>
+        <ul>
+            <li><strong>Universal Binary:</strong> Works on both Intel and Apple Silicon Macs</li>
+            <li><strong>Size:</strong> ~30-50 MB</li>
+            <li><strong>Ready to distribute:</strong> Just copy the .app file</li>
+        </ul>
+
+        <div class="info">
+            <strong>💡 To open the build folder:</strong>
+            <pre><code><span class="command">open build/macos/Build/Products/Release</span></code></pre>
+        </div>
+
+        <!-- SECTION 5: BUILD ANDROID -->
+        <h2>🤖 Step 5: Build Android APK</h2>
+
+        <div class="step">
+            <span class="step-number">1</span>
+            <strong>Build universal APK (recommended)</strong>
+            <pre><code><span class="command">flutter build apk --release</span>
+
+<span class="comment"># Builds one APK that works on all Android devices</span>
+<span class="comment"># Takes 3-7 minutes</span></code></pre>
+        </div>
+
+        <div class="output-location">
+            <strong>📍 Your Android APK is located at:</strong><br>
+            <span class="file-path">build/app/outputs/flutter-apk/app-release.apk</span>
+        </div>
+
+        <h3>Alternative: Build split APKs (smaller files)</h3>
+        <div class="step">
+            <strong>Build separate APKs per CPU architecture</strong>
+            <pre><code><span class="command">flutter build apk --split-per-abi --release</span>
+
+<span class="comment"># Creates 3 APKs (one per CPU type)</span></code></pre>
+        </div>
+
+        <div class="info">
+            <strong>💡 Split APKs output:</strong>
+            <ul>
+                <li><code>app-armeabi-v7a-release.apk</code> - 32-bit ARM (older phones)</li>
+                <li><code>app-arm64-v8a-release.apk</code> - 64-bit ARM (most modern phones)</li>
+                <li><code>app-x86_64-release.apk</code> - Intel/AMD (emulators)</li>
+            </ul>
+        </div>
+
+        <div class="info">
+            <strong>💡 To open the APK folder:</strong>
+            <pre><code><span class="command">open build/app/outputs/flutter-apk</span></code></pre>
+        </div>
+
+        <!-- SECTION 6: COMPARISON -->
+        <h2>📊 Build Comparison</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Build Type</th>
+                    <th>Command</th>
+                    <th>Output</th>
+                    <th>Size</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>macOS</strong></td>
+                    <td><code>flutter build macos</code></td>
+                    <td>1 universal .app</td>
+                    <td>~30-50 MB</td>
+                </tr>
+                <tr>
+                    <td><strong>Android (Universal)</strong></td>
+                    <td><code>flutter build apk</code></td>
+                    <td>1 APK (all devices)</td>
+                    <td>~40-60 MB</td>
+                </tr>
+                <tr>
+                    <td><strong>Android (Split)</strong></td>
+                    <td><code>flutter build apk --split-per-abi</code></td>
+                    <td>3 APKs (per CPU)</td>
+                    <td>~15-20 MB each</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- SECTION 7: COMPLETE WORKFLOW -->
+        <h2>⚡ Complete Build Workflow</h2>
+
+        <div class="success">
+            <strong>🎯 Copy and paste this entire workflow:</strong>
+        </div>
+
+        <h3>Build Both macOS and Android:</h3>
+        <pre><code><span class="comment"># Navigate to project</span>
+<span class="command">cd /Users/neiljones/RecordKeep_AppBuild</span>
+
+<span class="comment"># Clean previous builds</span>
+<span class="command">flutter clean</span>
+
+<span class="comment"># Get dependencies</span>
+<span class="command">flutter pub get</span>
+
+<span class="comment"># Build macOS</span>
+<span class="command">flutter build macos --release</span>
+
+<span class="comment"># Build Android</span>
+<span class="command">flutter build apk --release</span>
+
+<span class="comment"># Open output folders</span>
+<span class="command">open build/macos/Build/Products/Release</span>
+<span class="command">open build/app/outputs/flutter-apk</span></code></pre>
+
+        <!-- SECTION 8: TROUBLESHOOTING -->
+        <h2>🔧 Troubleshooting</h2>
+
+        <h3>Problem: "Flutter command not found"</h3>
+        <div class="warning">
+            <strong>Solution:</strong> Flutter is not in your PATH. Run:
+            <pre><code><span class="command">export PATH="$PATH:`pwd`/flutter/bin"</span></code></pre>
+        </div>
+
+        <h3>Problem: "No connected devices"</h3>
+        <div class="info">
+            <strong>Solution:</strong> This is normal for release builds. The <code>--release</code> flag builds without needing a device.
+        </div>
+
+        <h3>Problem: Build fails with errors</h3>
+        <div class="warning">
+            <strong>Solution:</strong> Try these steps:
+            <ol>
+                <li>Run <code>flutter clean</code></li>
+                <li>Delete <code>pubspec.lock</code></li>
+                <li>Run <code>flutter pub get</code></li>
+                <li>Try building again</li>
+            </ol>
+        </div>
+
+        <h3>Problem: macOS build says "Pods not found"</h3>
+        <div class="warning">
+            <strong>Solution:</strong> Install CocoaPods:
+            <pre><code><span class="command">sudo gem install cocoapods</span></code></pre>
+        </div>
+
+        <!-- SECTION 9: TIPS -->
+        <h2>💡 Pro Tips</h2>
+
+        <ul>
+            <li><strong>Check build size:</strong> <code>du -sh build/macos/Build/Products/Release/recordkeep.app</code></li>
+            <li><strong>Test the app:</strong> Double-click the .app file to run it before distributing</li>
+            <li><strong>Version control:</strong> Never commit the <code>build/</code> folder to git</li>
+            <li><strong>Clean regularly:</strong> Run <code>flutter clean</code> before each release build</li>
+            <li><strong>Build logs:</strong> Add <code>-v</code> flag for verbose output: <code>flutter build macos -v</code></li>
+        </ul>
+
+        <!-- SECTION 10: DISTRIBUTION -->
+        <h2>📤 Distribution</h2>
+
+        <h3>macOS App:</h3>
+        <ul>
+            <li>Zip the .app file: Right-click → Compress</li>
+            <li>Share the .zip file</li>
+            <li>Users: Unzip and drag to Applications folder</li>
+        </ul>
+
+        <h3>Android APK:</h3>
+        <ul>
+            <li>Share the .apk file directly</li>
+            <li>Users: Enable "Install from Unknown Sources" in Settings</li>
+            <li>Users: Open the .apk file to install</li>
+        </ul>
+
+        <div class="warning">
+            <strong>⚠️ Note:</strong> For official distribution, you'll need:
+            <ul>
+                <li><strong>macOS:</strong> Apple Developer account + code signing</li>
+                <li><strong>Android:</strong> Google Play Console account + signed APK/AAB</li>
+            </ul>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <p><strong>RecordKeep</strong> - Business Management System</p>
+            <p>Built with Flutter • Last updated: December 2025</p>
+        </div>
+    </div>
+</body>
+</html>
