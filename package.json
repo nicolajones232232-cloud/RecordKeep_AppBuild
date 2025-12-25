@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Flutter web app for RecordKeep",
   "scripts": {
-    "build": "./build.sh"
+    "build": "./build-vercel.sh",
+    "build:netlify": "./build.sh"
   },
   "private": true
 }

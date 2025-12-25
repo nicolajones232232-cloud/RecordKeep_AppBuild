@@ -1,6 +1,6 @@
 [build]
   publish = "build/web"
-  command = "npm run build"
+  command = "npm run build:netlify"
 
 [build.environment]
   FLUTTER_VERSION = "3.16.0"
